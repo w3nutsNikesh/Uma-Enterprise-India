@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "67281316894",
+    "project_id": "uma-enterprise-india",
+    "storage_bucket": "uma-enterprise-india.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67281316894:android:621d7c6bc97d4b927b520f",
+        "android_client_info": {
+          "package_name": "com.w3nuts.umaenterpriseindia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAu9-b_x20LkUYgbvaBBOb8d6feZi1mRTs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
