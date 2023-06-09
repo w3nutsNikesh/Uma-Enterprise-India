@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:name="${applicationName}"
@@ -11,7 +12,8 @@
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            tools:targetApi="honeycomb">
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
@@ -26,13 +28,17 @@
             <meta-data
                 android:name="flutter_deeplinking_enabled"
                 android:value="true" />
-            <intent-filter android:autoVerify="true">
+            <intent-filter
+                android:autoVerify="true"
+                tools:targetApi="m">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https"  android:host="umaenterpriseindiain.page.link" />
+                <data
+                    android:host="umaenterpriseindia.in.page.link"
+                    android:scheme="https" />
             </intent-filter>
 
         </activity>

@@ -35,7 +35,7 @@ class Data {
   DateTime? createdAt;
   DateTime? updatedAt;
   DateTime? publishedAt;
-  String? appstore_url;
+  String? appstoreUrl;
 
   Data({
     this.id,
@@ -44,7 +44,7 @@ class Data {
     this.createdAt,
     this.updatedAt,
     this.publishedAt,
-    this.appstore_url,
+    this.appstoreUrl,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -54,7 +54,7 @@ class Data {
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         publishedAt: DateTime.parse(json["publishedAt"]),
-        appstore_url: json["appstore_url"],
+        appstoreUrl: json["appstore_url"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -64,7 +64,7 @@ class Data {
         "createdAt": createdAt.toString(),
         "updatedAt": updatedAt.toString(),
         "publishedAt": publishedAt.toString(),
-        "appstore_url": appstore_url.toString(),
+        "appstore_url": appstoreUrl.toString(),
       };
 }
 
@@ -76,7 +76,9 @@ class Meta {
   });
 
   factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-        pagination: Pagination.fromJson(json["pagination"]),
+        pagination: Pagination.fromJson(
+          json["pagination"],
+        ),
       );
 
   Map<String, dynamic> toJson() => {

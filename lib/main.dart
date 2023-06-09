@@ -1,9 +1,9 @@
 // ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +11,11 @@ import 'package:umaenterpriseindia/my_home_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:umaenterpriseindia/version_code_response.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -26,7 +29,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => MyHomePageModel()),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Uma Enterprise',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -46,16 +49,33 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String? deepLink;
+
   @override
   void initState() {
     Timer(const Duration(seconds: 3), () {
       getVersion();
+
     });
     super.initState();
   }
 
+  Future<void> initDynamicLink(BuildContext context) async {
+    FirebaseDynamicLinks.instance.onLink;
+    final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
+
+    try {
+      if (data?.link != null) {
+        deepLink = data?.link.toString();
+      }
+    } catch (e) {
+      print('No deepLink found');
+    }
+  }
+
   getVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    initDynamicLink(context);
     var response = await http.get(
       Uri.parse("https://api.umaenterpriseindia.in/api/app-versions"),
     );
@@ -79,7 +99,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const MyHomePage(),
+              builder: (context) => MyHomePage(deepLink ?? ""),
             ),
           );
         }
@@ -87,7 +107,7 @@ class _SplashScreenState extends State<SplashScreen> {
         String ios;
         ios = packageInfo.version;
         if (data.data!.first.ios == ios) {
-          String url = data.data?.first.appstore_url ?? "";
+          String url = data.data?.first.appstoreUrl ?? "";
           if (await canLaunchUrl(Uri.parse(url))) {
             await launchUrl(
               Uri.parse(url),
@@ -99,7 +119,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const MyHomePage(),
+            builder: (context) => MyHomePage(deepLink ?? ""),
           ),
         );
       }

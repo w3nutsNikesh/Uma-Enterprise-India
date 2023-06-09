@@ -1,4 +1,5 @@
 // ignore_for_file: depend_on_referenced_packages
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -11,7 +12,11 @@ import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  String deepLinkUrl;
+  WebViewController? _controller;
+  String? mainUrl;
+
+  MyHomePage(this.deepLinkUrl, {super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -21,7 +26,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<MyHomePageModel>(context, listen: false).init(context);
+      Provider.of<MyHomePageModel>(context, listen: false).getLink(context);
+      Provider.of<MyHomePageModel>(context, listen: false).init(context, widget.deepLinkUrl);
     });
 
     super.initState();
@@ -55,8 +61,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
 class MyHomePageModel extends ChangeNotifier {
   WebViewController? _controller;
+  String? mainUrl;
 
-  init(BuildContext context) {
+  getLink(BuildContext context) {
+    FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) {
+      init(context, dynamicLinkData.link.toString());
+      notifyListeners();
+    }).onError((error) {
+      // Handle errors
+    });
+  }
+
+  init(BuildContext context, String url) {
+
+    if (url.isNotEmpty) {
+      mainUrl = url;
+      notifyListeners();
+      _controller?.loadRequest(Uri.parse(url));
+    } else {
+      mainUrl = "https://umaenterpriseindia.in/";
+      notifyListeners();
+    }
+
     late final PlatformWebViewControllerCreationParams params;
 
     if (WebViewPlatform.instance is WebKitWebViewPlatform) {
@@ -87,7 +113,7 @@ class MyHomePageModel extends ChangeNotifier {
         },
       )
       ..loadRequest(
-        Uri.parse("https://umaenterpriseindia.in/"),
+        Uri.parse("$mainUrl"),
       )
       ..enableZoom(false);
 
