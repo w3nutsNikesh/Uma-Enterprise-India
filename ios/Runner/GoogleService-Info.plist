@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDEaiCg-Z0Pt5zByNERaYcGwoFOgAtFH2E</string>
+	<key>GCM_SENDER_ID</key>
+	<string>67281316894</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.w3nuts.umaenterpriseindia</string>
+	<key>PROJECT_ID</key>
+	<string>uma-enterprise-india</string>
+	<key>STORAGE_BUCKET</key>
+	<string>uma-enterprise-india.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:67281316894:ios:20272ae0be7317307b520f</string>
+</dict>
+</plist>
