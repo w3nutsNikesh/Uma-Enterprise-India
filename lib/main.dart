@@ -32,6 +32,12 @@ class MyApp extends StatelessWidget {
         title: 'Uma Enterprise',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          pageTransitionsTheme: const PageTransitionsTheme(
+            builders: {
+              TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+              TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+            },
+          ),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
@@ -55,7 +61,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Timer(const Duration(seconds: 3), () {
       getVersion();
-
     });
     super.initState();
   }
@@ -67,6 +72,8 @@ class _SplashScreenState extends State<SplashScreen> {
     try {
       if (data?.link != null) {
         deepLink = data?.link.toString();
+      } else {
+        print("Nikesh");
       }
     } catch (e) {
       print('No deepLink found');
