@@ -119,16 +119,16 @@ class _SplashScreenState extends State<SplashScreen> {
               mode: LaunchMode.externalApplication,
             );
           }
-        }
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyHomePage(
-              deepLink ?? "",
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MyHomePage(
+                deepLink ?? "",
+              ),
             ),
-          ),
-        );
+          );
+        }
       }
     }
   }
