@@ -72,9 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
     try {
       if (data?.link != null) {
         deepLink = data?.link.toString();
-      } else {
-        print("Nikesh");
-      }
+      } else {}
     } catch (e) {
       print('No deepLink found');
     }
@@ -113,7 +111,7 @@ class _SplashScreenState extends State<SplashScreen> {
       } else if (Platform.isIOS) {
         String ios;
         ios = packageInfo.version;
-        if (data.data!.first.ios == ios) {
+        if (data.data!.first.ios != ios) {
           String url = data.data?.first.appstoreUrl ?? "";
           if (await canLaunchUrl(Uri.parse(url))) {
             await launchUrl(
@@ -126,7 +124,9 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => MyHomePage(deepLink ?? ""),
+            builder: (context) => MyHomePage(
+              deepLink ?? "",
+            ),
           ),
         );
       }
